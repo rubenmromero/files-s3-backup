@@ -3,14 +3,13 @@
 #
 # Commands Definition
 #
-AWK=/bin/awk
-BASENAME=/bin/basename
-DIRNAME=/usr/bin/dirname
+[[ -s /bin/awk ]] && AWK=/bin/awk || AWK=/usr/bin/awk
 ECHO="/bin/echo -e"
-FIND=/bin/find
+[[ -s /bin/find ]] && FIND=/bin/find || FIND=/usr/bin/find
 GREP=/bin/grep
 HEAD=/usr/bin/head
 RM="/bin/rm -vf"
+SED=/bin/sed
 TAR="/bin/tar cvfz"
 WC="/usr/bin/wc -l"
 
@@ -30,7 +29,7 @@ WORKSPACE=/
 #
 if [[ $(whoami) != 'root' ]]
 then
-   echo -e "\nThe script must be executed by root user\n"
+   $ECHO "\nThe script must be executed by root user\n"
    exit 1
 fi
 
@@ -68,13 +67,10 @@ rotate_backups ()
 
 # Prepare the execution
 BACKUP_FILE=${BACKUPS_DIR}/$BACKUP_NAME
-if [[ $S3_FOLDER = */ ]]
-then
-   S3_FOLDER=$($DIRNAME $S3_FOLDER)/$($BASENAME $S3_FOLDER)
-fi
+S3_FOLDER=$($ECHO $S3_FOLDER |$SED "s/\/$//g")
 
 # Process the BACKUP_LIST variable turning absolute paths in relative paths for create the TAR file
-BACKUP_LIST=$($ECHO "$BACKUP_LIST" |sed "s/^\| / \./g")
+BACKUP_LIST=$($ECHO "$BACKUP_LIST" |$SED "s/^\| / \./g")
 
 # Create the TAR file containing the directories and files included in BACUKP_LIST variable
 $ECHO "\nCreate '$BACKUP_NAME' backup containing the directories and files listed bellow:"
