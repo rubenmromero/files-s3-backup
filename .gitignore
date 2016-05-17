@@ -1,2 +1,3 @@
-log/*
+/conf/files_to_S3.conf
+/log/*
 !.gitkeep
