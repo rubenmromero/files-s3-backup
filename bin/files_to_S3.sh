@@ -26,6 +26,15 @@ CONF_FILE=$(dirname $0)/../conf/files_to_S3-backup.conf
 WORKSPACE=/
 
 #
+# Check the user used for the script execution
+#
+if [[ $(whoami) != 'root' ]]
+then
+   echo -e "\nThe script must be executed by root user\n"
+   exit 1
+fi
+
+#
 # Configuration File Import
 #
 . $CONF_FILE
