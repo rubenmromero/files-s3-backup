@@ -70,7 +70,7 @@ BACKUP_FILE=${BACKUPS_DIR}/$BACKUP_NAME
 S3_FOLDER=$($ECHO $S3_FOLDER |$SED "s/\/$//g")
 
 # Process the BACKUP_LIST variable turning absolute paths in relative paths for create the TAR file
-BACKUP_LIST=$($ECHO "$BACKUP_LIST" |$SED "s/^\| / \./g")
+BACKUP_LIST=$($ECHO "$BACKUP_LIST" |$SED "s/^\| / ./g")
 
 # Create the TAR file containing the directories and files included in BACUKP_LIST variable
 $ECHO "\nCreate '$BACKUP_NAME' backup containing the directories and files listed bellow:"
@@ -79,7 +79,8 @@ if [[ -z $EXCLUDE_LIST ]]
 then
    $TAR $BACKUP_FILE $BACKUP_LIST
 else
-   $TAR $BACKUP_FILE $BACKUP_LIST --exclude "$EXCLUDE_LIST"
+   EXCLUDE_LIST=$($ECHO "$EXCLUDE_LIST" |$SED "s/^\| / --exclude ./g")
+   $TAR $BACKUP_FILE $BACKUP_LIST $EXCLUDE_LIST
 fi
 
 # Send to S3 the compressed TAR file

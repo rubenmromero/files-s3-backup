@@ -11,12 +11,12 @@ BACKUPS_DIR=/var/backups
 S3_FOLDER="s3://<bucket_name>/${BACKUP_PREFIX}/"
 
 #
-# Absolute paths list of directories and files to include in backups
+# Absolute paths list of directories and files to include in backups separated by spaces
 #
 BACKUP_LIST="/etc /var/www"
 
 #
-# Absolute paths list of directories and files to exclude in backups
+# Absolute paths list of directories and files to exclude in backups separated by spaces
 #
 # This variable can be left empty, and use of wildcards is allowed, e.g., "/opt/jenkins/jobs/*/workspace"
 #
