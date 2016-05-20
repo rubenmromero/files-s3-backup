@@ -8,6 +8,7 @@ ECHO="/bin/echo -e"
 [[ -s /bin/find ]] && FIND=/bin/find || FIND=/usr/bin/find
 GREP=/bin/grep
 HEAD=/usr/bin/head
+LS=/bin/ls
 RM="/bin/rm -vf"
 SED=/bin/sed
 TAR="/bin/tar cvfz"
@@ -43,17 +44,27 @@ fi
 #
 rotate_backups ()
 {
-   # Delete the local backup files older than value set in NUM_DAYS_LOCAL variable
+   # Delete the local backup files older than value set in NUM_COPIES_LOCAL variable
    $ECHO "\nDelete old backup files from local storage:"
-   $FIND $BACKUPS_DIR -name "${BACKUP_PREFIX}-*.tar*" -mtime +$NUM_DAYS_LOCAL -exec $RM {} \;
-   
-   # Delete the S3 backup files older than value set in NUM_DAYS_S3 variable
-   $ECHO "\nDelete old backup files from S3 storage:"
-   NUM_BACKUPS_S3=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\.*" |$WC)
-   if [[ $NUM_BACKUPS_S3 -gt $NUM_DAYS_S3 ]]
+   #$FIND $BACKUPS_DIR -name "${BACKUP_PREFIX}-*.tar*" -mtime +$NUM_COPIES_LOCAL -exec $RM {} \;
+   NUM_BACKUPS_LOCAL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$WC)
+   if [[ $NUM_BACKUPS_LOCAL -gt $NUM_COPIES_LOCAL ]]
    then
-      NUM_FILES_DEL=$(($NUM_BACKUPS_S3 - $NUM_DAYS_S3))
-      LIST_FILES_DEL=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\.*" |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
+      NUM_FILES_DEL=$(($NUM_BACKUPS_LOCAL - $NUM_COPIES_LOCAL))
+      LIST_FILES_DEL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
+      for FILE in $LIST_FILES_DEL
+      do
+         $RM ${BACKUPS_DIR}/$FILE
+      done
+   fi
+   
+   # Delete the S3 backup files older than value set in NUM_COPIES_S3 variable
+   $ECHO "\nDelete old backup files from S3 storage:"
+   NUM_BACKUPS_S3=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\..*" |$WC)
+   if [[ $NUM_BACKUPS_S3 -gt $NUM_COPIES_S3 ]]
+   then
+      NUM_FILES_DEL=$(($NUM_BACKUPS_S3 - $NUM_COPIES_S3))
+      LIST_FILES_DEL=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\..*" |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
       for FILE in $LIST_FILES_DEL
       do
          $AWS_S3_RM ${S3_FOLDER}/$FILE

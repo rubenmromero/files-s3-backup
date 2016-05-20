@@ -23,11 +23,11 @@ BACKUP_LIST="/etc /var/www"
 EXCLUDE_LIST=""
 
 #
-# Number of days to store backup files in local (older backups will be rotated)
+# Number of copies to store backup files in local (older backups will be rotated)
 #
-NUM_DAYS_LOCAL=3
+NUM_COPIES_LOCAL=3
 
 #
-# Number of days to store backup files in S3 (older backups will be rotated)
+# Number of copies to store backup files in S3 (older backups will be rotated)
 #
-NUM_DAYS_S3=30
+NUM_COPIES_S3=30
