@@ -51,7 +51,7 @@ rotate_backups ()
    if [[ $NUM_BACKUPS_LOCAL -gt $NUM_COPIES_LOCAL ]]
    then
       NUM_FILES_DEL=$(($NUM_BACKUPS_LOCAL - $NUM_COPIES_LOCAL))
-      LIST_FILES_DEL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
+      LIST_FILES_DEL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$HEAD -$NUM_FILES_DEL)
       for FILE in $LIST_FILES_DEL
       do
          $RM ${BACKUPS_DIR}/$FILE
