@@ -5,10 +5,9 @@
 #
 [[ -s /bin/awk ]] && AWK=/bin/awk || AWK=/usr/bin/awk
 ECHO="/bin/echo -e"
-[[ -s /bin/find ]] && FIND=/bin/find || FIND=/usr/bin/find
 GREP=/bin/grep
 HEAD=/usr/bin/head
-LS=/bin/ls
+[[ -s /usr/bin/ls ]] && LS=/usr/bin/ls || LS=/bin/ls
 RM="/bin/rm -vf"
 SED=/bin/sed
 TAR="/bin/tar cvfz"
@@ -46,7 +45,6 @@ rotate_backups ()
 {
    # Delete the local backup files older than value set in NUM_COPIES_LOCAL variable
    $ECHO "\nDelete old backup files from local storage:"
-   #$FIND $BACKUPS_DIR -name "${BACKUP_PREFIX}-*.tar*" -mtime +$NUM_COPIES_LOCAL -exec $RM {} \;
    NUM_BACKUPS_LOCAL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$WC)
    if [[ $NUM_BACKUPS_LOCAL -gt $NUM_COPIES_LOCAL ]]
    then
