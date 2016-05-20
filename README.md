@@ -1,6 +1,6 @@
 # Files to S3 - Backup
 
-Script to do backup of directories and files on a server and send to S3 service the resulting TAR file.
+Tool to do backup of directories and files on a server and send to S3 service the resulting TAR file.
 
 ## Prerequisites
 
