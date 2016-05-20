@@ -54,7 +54,7 @@ rotate_backups ()
       LIST_FILES_DEL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$HEAD -$NUM_FILES_DEL)
       for FILE in $LIST_FILES_DEL
       do
-         $RM ${BACKUPS_DIR}/$FILE
+         $RM $FILE
       done
    fi
    
