@@ -21,7 +21,7 @@ AWS_S3_RM="/usr/bin/aws s3 rm"
 #
 # Variables Definition
 #
-CONF_FILE=$(dirname $0)/../conf/files_to_S3.conf
+CONF_FILE=$(dirname $0)/../conf/fs3backup.conf
 WORKSPACE=/
 
 #

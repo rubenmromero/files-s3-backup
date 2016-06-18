@@ -1,4 +1,4 @@
-# Files to S3 - Backup
+# Files-S3-Backup
 
 Tool to do backup of directories and files on a server and send to S3 service the resulting TAR file.
 
@@ -38,25 +38,25 @@ Tool to do backup of directories and files on a server and send to S3 service th
 
 1. Download the project code in your favourite path:
 
-        $ git clone https://github.com/rubenmromero/files_to_S3-backup.git
+        $ git clone https://github.com/rubenmromero/files-s3-backup.git
 
-2. Create a copy of [files_to_S3.conf.dist](conf/files_to_S3.conf.dist) template named `conf/files_to_S3.conf` and set the backup properties with the appropiate values:
-
-        # From the project root folder
-        $ cp conf/files_to_S3.conf.dist conf/files_to_S3.conf
-        $ vi conf/files_to_S3.conf
-
-3. If you want to schedule the periodic tool execution, copy the [files_to_S3-backup](cron.d/files_to_S3-backup) template to the `/etc/cron.d` directory and replace the existing `<tags>` with the appropiate values:
+2. Create a copy of [fs3backup.conf.dist](conf/fs3backup.conf.dist) template named `conf/fs3backup.conf` and set the backup properties with the appropiate values:
 
         # From the project root folder
-        $ sudo cp cron.d/files_to_S3-backup /etc/cron.d
-        $ sudo vi cron.d/files_to_S3-backup
+        $ cp conf/fs3backup.conf.dist conf/fs3backup.conf
+        $ vi conf/fs3backup.conf
+
+3. If you want to schedule the periodic tool execution, copy the [files-s3-backup](cron.d/files-s3-backup) template to the `/etc/cron.d` directory and replace the existing `<tags>` with the appropiate values:
+
+        # From the project root folder
+        $ sudo cp cron.d/files-s3-backup /etc/cron.d
+        $ sudo vi cron.d/files-s3-backup
 
 ## Execution Method
 
-Once configured the backup properties into `conf/files_to_S3.conf` file, simply run `bin/files_to_S3.sh` script as follows:
+Once configured the backup properties into `conf/fs3backup.conf` file, simply run `bin/fs3backup.sh` script as follows:
 
-    # ./bin/files_to_S3.sh
+    # ./bin/fs3backup.sh
 
 ## Related Links
 

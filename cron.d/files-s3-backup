@@ -8,4 +8,4 @@ LOGS_PATH=<path_to_project>/log
 #
 # Backup of directories and files on the server and send to S3 service the resulting TAR file
 #
-0 3 * * *	root	${BIN_PATH}/files_to_S3.sh >${LOGS_PATH}/files_to_S3.log 2>&1
+0 3 * * *	root	${BIN_PATH}/fs3backup.sh >${LOGS_PATH}/fs3backup.log 2>&1
