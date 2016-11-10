@@ -29,8 +29,8 @@ WORKSPACE=/
 #
 if [[ $(whoami) != 'root' ]]
 then
-   $ECHO "\nThe script must be executed by root user\n"
-   exit 1
+    $ECHO "\nThe script must be executed by root user\n"
+    exit 1
 fi
 
 #
@@ -43,31 +43,31 @@ fi
 #
 rotate_backups ()
 {
-   # Delete the local backup files older than value set in NUM_COPIES_LOCAL variable
-   $ECHO "\nDelete old backup files from local storage:"
-   NUM_BACKUPS_LOCAL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$WC)
-   if [[ $NUM_BACKUPS_LOCAL -gt $NUM_COPIES_LOCAL ]]
-   then
-      NUM_FILES_DEL=$(($NUM_BACKUPS_LOCAL - $NUM_COPIES_LOCAL))
-      LIST_FILES_DEL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$HEAD -$NUM_FILES_DEL)
-      for FILE in $LIST_FILES_DEL
-      do
-         $RM $FILE
-      done
-   fi
-   
-   # Delete the S3 backup files older than value set in NUM_COPIES_S3 variable
-   $ECHO "\nDelete old backup files from S3 storage:"
-   NUM_BACKUPS_S3=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\..*" |$WC)
-   if [[ $NUM_BACKUPS_S3 -gt $NUM_COPIES_S3 ]]
-   then
-      NUM_FILES_DEL=$(($NUM_BACKUPS_S3 - $NUM_COPIES_S3))
-      LIST_FILES_DEL=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\..*" |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
-      for FILE in $LIST_FILES_DEL
-      do
-         $AWS_S3_RM ${S3_FOLDER}/$FILE
-      done
-   fi
+    # Delete the local backup files older than value set in NUM_COPIES_LOCAL variable
+    $ECHO "\nDelete old backup files from local storage:"
+    NUM_BACKUPS_LOCAL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$WC)
+    if [[ $NUM_BACKUPS_LOCAL -gt $NUM_COPIES_LOCAL ]]
+    then
+        NUM_FILES_DEL=$(($NUM_BACKUPS_LOCAL - $NUM_COPIES_LOCAL))
+        LIST_FILES_DEL=$($LS ${BACKUPS_DIR}/${BACKUP_PREFIX}-*.tar.* |$HEAD -$NUM_FILES_DEL)
+        for FILE in $LIST_FILES_DEL
+        do
+            $RM $FILE
+        done
+    fi
+
+    # Delete the S3 backup files older than value set in NUM_COPIES_S3 variable
+    $ECHO "\nDelete old backup files from S3 storage:"
+    NUM_BACKUPS_S3=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\..*" |$WC)
+    if [[ $NUM_BACKUPS_S3 -gt $NUM_COPIES_S3 ]]
+    then
+        NUM_FILES_DEL=$(($NUM_BACKUPS_S3 - $NUM_COPIES_S3))
+        LIST_FILES_DEL=$($AWS_S3_LS ${S3_FOLDER}/ |$GREP "${BACKUP_PREFIX}-.*\.tar\..*" |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
+        for FILE in $LIST_FILES_DEL
+        do
+            $AWS_S3_RM ${S3_FOLDER}/$FILE
+        done
+    fi
 }
 
 #
@@ -86,10 +86,10 @@ $ECHO "\nCreate '$BACKUP_NAME' backup containing the directories and files liste
 cd $WORKSPACE
 if [[ -z $EXCLUDE_LIST ]]
 then
-   $TAR $BACKUP_FILE $BACKUP_LIST
+    $TAR $BACKUP_FILE $BACKUP_LIST
 else
-   EXCLUDE_LIST=$($ECHO "$EXCLUDE_LIST" |$SED "s/^\| / --exclude ./g")
-   $TAR $BACKUP_FILE $BACKUP_LIST $EXCLUDE_LIST
+    EXCLUDE_LIST=$($ECHO "$EXCLUDE_LIST" |$SED "s/^\| / --exclude ./g")
+    $TAR $BACKUP_FILE $BACKUP_LIST $EXCLUDE_LIST
 fi
 
 # Send to S3 the compressed TAR file
