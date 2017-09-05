@@ -14,14 +14,14 @@ Tool to do backup of directories and files on a server and send to S3 service th
       Policy Name : AmazonS3FullAccess
 
       {
-        "Version": "2012-10-17",
-        "Statement": [
-          {
-            "Effect": "Allow",
-            "Action": "s3:*",
-            "Resource": "*"
-          }
-        ]
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Effect": "Allow",
+                  "Action": "s3:*",
+                  "Resource": "*"
+              }
+          ]
       }
 
 * AWS CLI for ec2 commands. Installation and configuration:
