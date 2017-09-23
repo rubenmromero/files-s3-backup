@@ -13,7 +13,7 @@ SED=/bin/sed
 TAR="/bin/tar cvfz"
 WC="/usr/bin/wc -l"
 
-# Comandos de AWS
+# AWS Commands
 AWS_S3_CP="/usr/bin/aws s3 cp"
 AWS_S3_LS="/usr/bin/aws s3 ls"
 AWS_S3_RM="/usr/bin/aws s3 rm"
