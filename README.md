@@ -60,5 +60,6 @@ Once configured the backup properties into `conf/fs3backup.conf` file, simply ru
 
 ## Related Links
 
-* [Install the AWS CLI Using Pip](http://docs.aws.amazon.com/cli/latest/userguide/installing.html#install-with-pip)
-* [Configuring the AWS Command Line Interface](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+* [Installing the AWS CLI Using pip](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html#install-tool-pip)
+* [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+* [s3 - AWS CLI Command Reference](https://docs.aws.amazon.com/cli/latest/reference/s3/)
