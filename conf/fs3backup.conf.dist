@@ -6,7 +6,7 @@
 # Path and name related parameters with which the backups will be stored in local and S3
 #
 BACKUP_PREFIX=<backup_prefix>
-BACKUP_NAME="${BACKUP_PREFIX}-$(/bin/date +%Y_%m_%d-%H_%M).tar.gz"
+BACKUP_NAME="${BACKUP_PREFIX}-$(/bin/date +%Y_%m_%d-%H_%M)"
 BACKUPS_DIR=/var/backups
 S3_FOLDER="s3://<bucket_name>/${BACKUP_PREFIX}/"
 
