@@ -66,11 +66,11 @@ rotate_backups ()
 
     # Delete the S3 backup files older than value set in NUM_COPIES_S3 variable
     $ECHO "\nDelete old backup files from S3 storage:"
-    NUM_BACKUPS_S3=$($AWS_S3_LS ${S3_BACKUPS_PATH}/ |$GREP '${BACKUP_FILE_S3_PATTERN}' |$WC)
+    NUM_BACKUPS_S3=$($AWS_S3_LS ${S3_BACKUPS_PATH}/ |$GREP "${BACKUP_FILE_S3_PATTERN}" |$WC)
     if [[ $NUM_BACKUPS_S3 -gt $NUM_COPIES_S3 ]]
     then
         NUM_FILES_DEL=$(($NUM_BACKUPS_S3 - $NUM_COPIES_S3))
-        LIST_FILES_DEL=$($AWS_S3_LS ${S3_BACKUPS_PATH}/ |$GREP '${BACKUP_FILE_S3_PATTERN}' |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
+        LIST_FILES_DEL=$($AWS_S3_LS ${S3_BACKUPS_PATH}/ |$GREP "${BACKUP_FILE_S3_PATTERN}" |$HEAD -$NUM_FILES_DEL |$AWK '{print $4}')
         for FILE in $LIST_FILES_DEL
         do
             $AWS_S3_RM ${S3_BACKUPS_PATH}/$FILE
