@@ -5,10 +5,10 @@
 #
 # Path and name related parameters with which the backups will be stored in local and S3
 #
-BACKUP_PREFIX=<backup_prefix>
-BACKUP_NAME="${BACKUP_PREFIX}-$(/bin/date +%Y_%m_%d-%H_%M)"
+BACKUP_NAME_PREFIX=<backup_prefix>
+BACKUP_NAME_SUFFIX=$(/bin/date +%Y_%m_%d-%H_%M)
 BACKUPS_PATH=/var/backups
-S3_BACKUPS_PATH="s3://<bucket_name>/${BACKUP_PREFIX}/"
+S3_BACKUPS_PATH=s3://<bucket_name>/${BACKUP_NAME_PREFIX}/
 
 #
 # Absolute paths list of directories and files to include in backups separated by spaces

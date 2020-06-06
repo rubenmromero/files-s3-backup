@@ -40,9 +40,10 @@ fi
 #
 . $CONF_FILE
 
-BACKUP_FILE_PATH=${BACKUPS_PATH}/$BACKUP_NAME.tar.gz
-BACKUP_FILE_PATH_PATTERN=${BACKUPS_PATH}/${BACKUP_PREFIX}-*.tar.gz
-BACKUP_FILE_S3_PATTERN=${BACKUP_PREFIX}-.*\.tar\.gz
+BACKUP_FILE=${BACKUP_NAME_PREFIX}-${BACKUP_NAME_SUFFIX}.tar.gz
+BACKUP_FILE_PATH=${BACKUPS_PATH}/${BACKUP_FILE}
+BACKUP_FILE_PATH_PATTERN=${BACKUPS_PATH}/${BACKUP_NAME_PREFIX}-*.tar.gz
+BACKUP_FILE_S3_PATTERN=${BACKUP_NAME_PREFIX}-.*\.tar\.gz
 S3_BACKUPS_PATH=$($ECHO $S3_BACKUPS_PATH |$SED "s/\/$//g")
 
 #
@@ -89,7 +90,7 @@ $MKDIR $BACKUPS_PATH
 BACKUP_LIST=$($ECHO "$BACKUP_LIST" |$SED "s/^\| / ./g")
 
 # Create the TAR file containing the directories and files included in BACUKP_LIST variable
-$ECHO "\nCreate '$BACKUP_NAME' backup containing the directories and files listed bellow:"
+$ECHO "\nCreate '$BACKUP_FILE' backup containing the directories and files listed bellow:"
 cd $WORKSPACE
 if [[ -z $EXCLUDE_LIST ]]
 then
@@ -100,7 +101,7 @@ else
 fi
 
 # Send to S3 the compressed TAR file
-$ECHO "\nSend the created '$BACKUP_NAME' file to '${S3_BACKUPS_PATH}/' S3 path:"
+$ECHO "\nSend the created '$BACKUP_FILE' file to '${S3_BACKUPS_PATH}/' S3 path:"
 $AWS_S3_CP $BACKUP_FILE_PATH ${S3_BACKUPS_PATH}/
 
 # Delete old backup files from local and S3 storage
