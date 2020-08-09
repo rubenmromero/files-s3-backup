@@ -15,10 +15,11 @@ TAR="/bin/tar cvfz"
 WC="/usr/bin/wc -l"
 
 # AWS Commands
-AWS_S3_CP="/usr/bin/aws s3 cp"
-AWS_S3_LS="/usr/bin/aws s3 ls"
-AWS_S3_MB="/usr/bin/aws s3 mb"
-AWS_S3_RM="/usr/bin/aws s3 rm"
+AWS=$([[ -s  /usr/bin/aws]] && echo /usr/bin/aws || echo /usr/local/bin/aws)
+AWS_S3_CP="$AWS s3 cp"
+AWS_S3_LS="$AWS s3 ls"
+AWS_S3_MB="$AWS s3 mb"
+AWS_S3_RM="$AWS s3 rm"
 
 #
 # Variables Definition
