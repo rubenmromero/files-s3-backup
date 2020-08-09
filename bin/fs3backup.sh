@@ -85,7 +85,8 @@ rotate_backups ()
 
 # Create the local and S3 backup folders if they don't exist
 $MKDIR $BACKUPS_PATH
-[[ $($AWS_S3_LS $S3_BACKUPS_PATH 2>/dev/null) ]] || $AWS_S3_MB $S3_BACKUPS_PATH 1>/dev/null
+S3_BUCKET_PATH=$(dirname $S3_BACKUPS_PATH)
+[[ $($AWS_S3_LS $S3_BUCKET_PATH 2>/dev/null) ]] || $AWS_S3_MB $S3_BUCKET_PATH 1>/dev/null
 
 # Process the BACKUP_LIST variable turning absolute paths in relative paths for create the TAR file
 BACKUP_LIST=$($ECHO "$BACKUP_LIST" |$SED "s/^\| / ./g")
