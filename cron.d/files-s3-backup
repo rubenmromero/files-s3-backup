@@ -3,9 +3,9 @@
 #
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 BIN_PATH=<path_to_project>/bin
-LOGS_PATH=<path_to_project>/log
+LOG_PATH=<path_to_project>/log
 
 #
 # Backup of directories and files on the server and send to S3 service the resulting TAR file
 #
-0 3 * * *	root	${BIN_PATH}/fs3backup.sh >${LOGS_PATH}/fs3backup.log 2>&1
+0 3 * * *	root	${BIN_PATH}/fs3backup.sh >${LOG_PATH}/fs3backup.log 2>&1
